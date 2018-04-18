@@ -16,7 +16,7 @@ class Results extends React.Component{
       (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 100) &&
       this.props.searchResult.num_items > 0 && !this.props.searchResult.is_loading
     ) {
-      this.props.search("",this.props.searchResult.num_items+1);
+      this.props.search("",this.props.searchResult.num_items+1,false);
     }
   }
     render(){
@@ -24,9 +24,10 @@ class Results extends React.Component{
         console.log(this.props.searchResult)
         if(this.props.searchResult.items.length != 0) {
             var resultItems = this.props.searchResult.items.map(function(result) {
-                return <ResultItems  key={result.publishedAt+Math.random()} trackName={result.description} />
+                return <ResultItems  key={result.cacheID} trackName={result.snippet} />
             });
         }
+
         return(
             this.props.searchResult.num_items > 0 ?
             <div style={{border: '1px solid rgba(0,0,0,.03)',boxShadow: '0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12)',margin:'60px',backgroundColor:'rgba(250,250,250,1)'}}>

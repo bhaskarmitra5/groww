@@ -15,9 +15,8 @@ class App extends React.Component{
         // console.log(this)
         console.log(response)
 
-        this.state.items.push(...response.data.articles)
-        console.log(this.state.items)
-        this.state.num_items = this.state.num_items + response.data.articles.length
+        this.state.items.push(...response.data.items)
+        this.state.num_items = this.state.num_items + response.data.items.length
         this.setState({
             num_items: this.state.num_items,
             items : this.state.items,
@@ -25,13 +24,23 @@ class App extends React.Component{
             url:this.state.url,
         })
     }
-    search = (url=this.state.url,start=1) =>{ // this did the magic
-        console.log(url)
+    reset(){
+        this.setState({
+            num_items: 0,
+            items : [],
+            is_loading: false,
+        })
+    }
+    search = (url=this.state.url,start=1,isNew=false) =>{ // this did the magic
+        if(isNew){
+            this.reset()
+        }
         this.state.is_loading=true
-        if(url){
+        if(url!==""){
             this.state.url=url
         }
-        url=this.state.url //+'&start='+start
+        console.log(url)
+        url=this.state.url+'&start='+start
         axios({
             url:url,
             method:"get",
